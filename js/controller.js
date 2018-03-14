@@ -62,7 +62,7 @@ function subscribeUser() {
 		applicationServerKey: urlB64ToUint8Array(applicationServerPublicKey)
 	})
 	.then(function(subscription) {
-		console.log(subscription);
+		document.querySelector('#subscription').innerHTML = JSON.stringify(subscription);
 	})
 	.catch(function(err) {
 		console.log(err);
@@ -143,6 +143,7 @@ function registerServiceWorker() {
 			.then(function (registration) {
 				console.log('ServiceWorker registration successful with scope: ', registration);
 				swRegistration = registration;
+				initializeUI();
 		})
 		.catch(function (err) {
 			console.log('ServiceWorker registration failed: ', err);
