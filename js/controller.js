@@ -50,7 +50,7 @@ var deviceDetection = function () {
 
 	function postData(data) {
 	var xhttp = new XMLHttpRequest();
-	xhttp.open('POST', 'http://66.154.105.182:8082/subscribe', true);
+	xhttp.open('POST', 'https://guarded-brook-83933.herokuapp.com/subscribe', true);
 	xhttp.setRequestHeader('Content-type', 'application/json');
 	xhttp.send(data);
 }
