@@ -4,6 +4,8 @@ var crypto = require('crypto');
 var curve = crypto.createECDH('prime256v1');
 curve.generateKeys();
 
+let pubKey = 'BBnl1no3wRpXiQdAKo-sFNBr8dM6dIHlEuW1KuA5cFkgvOlhQyHf7P5IM8wpAZ9LpuYDveykxJR5PAHa4QxgCvo';
+let privKey = '-9XRgCCbQpHLAKWQc1RjyO49aOS6eSBmd8861z_aaK0';
 
 function urlBase64ToUint8Array(base64String) {
     const padding = '='.repeat((4 - base64String.length % 4) % 4);
@@ -26,7 +28,8 @@ function generateVAPIDKeys() {
 }
 
 var keys = generateVAPIDKeys();
-console.log(urlBase64ToUint8Array(keys.publicKey));
+console.log(urlBase64ToUint8Array(pubKey));
+console.log(urlBase64ToUint8Array(privKey));
 
 http.createServer(function (req, res) {
     req.setEncoding('utf8');

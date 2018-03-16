@@ -1,9 +1,86 @@
 'use strict';
 
-const applicationServerPublicKey = 'BBnl1no3wRpXiQdAKo-sFNBr8dM6dIHlEuW1KuA5cFkgvOlhQyHf7P5IM8wpAZ9LpuYDveykxJR5PAHa4QxgCvo';
+const applicationServerPublicKey = 'BPsNLT25jXPomOFbJpVxesNCwVE7p19Xnt8KOP00GhCp8RWDv9cJkTgtoLKfAUdWfg-uwF1xGcANFD9ALPZmxnU';
 
 let isSubscribed = false;
 let swRegistration = null;
+
+var deviceDetection = function () { 
+    var osVersion, device, deviceType, userAgent, isSmartphoneOrTablet; 
+    
+    device = (navigator.userAgent).match(/Android|iPhone|iPad|iPod/i); 
+    
+    if ( /Android/i.test(device) ) { 
+        if ( !/mobile/i.test(navigator.userAgent) ) { 
+            deviceType = 'tablet'; 
+        } else { 
+            deviceType = 'phone'; 
+        } 
+    
+        osVersion = (navigator.userAgent).match(/Android\s+([\d\.]+)/i); 
+        osVersion = osVersion[0]; 
+        osVersion = osVersion.replace('Android ', ''); 
+    
+    } else if ( /iPhone/i.test(device) ) { 
+        deviceType = 'phone'; 
+        osVersion = (navigator.userAgent).match(/OS\s+([\d\_]+)/i); 
+        osVersion = osVersion[0]; 
+        osVersion = osVersion.replace(/_/g, '.'); 
+        osVersion = osVersion.replace('OS ', ''); 
+    
+    } else if ( /iPad/i.test(device) ) { 
+        deviceType = 'tablet'; 
+        osVersion = (navigator.userAgent).match(/OS\s+([\d\_]+)/i); 
+        osVersion = osVersion[0]; 
+        osVersion = osVersion.replace(/_/g, '.'); 
+        osVersion = osVersion.replace('OS ', ''); 
+    } 
+    isSmartphoneOrTablet = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent); 
+    userAgent = navigator.userAgent; 
+    
+    return { 'isSmartphoneOrTablet': isSmartphoneOrTablet, 
+             'device': device, 
+             'osVersion': osVersion, 
+             'userAgent': userAgent, 
+             'deviceType': deviceType 
+            }; 
+    }();
+
+
+
+	function postData(data) {
+	var xhttp = new XMLHttpRequest();
+	xhttp.open('POST', 'http://localhost:8082/subscribe', true);
+	xhttp.setRequestHeader('Content-type', 'application/json');
+	xhttp.send(data);
+}
+
+function isAndroid() {
+	var android_regex =/Android | android /;
+	if (android_regex.test(navigator.appVersion)) {
+		return 'Android';
+	} else {
+		return null;
+	}
+}
+
+function isIos() {
+	var ios_regex =/Ios | ios | Iphone | iPhone/;
+	if (ios_regex.test(navigator.appVersion)) {
+		return 'iOS';
+	} else {
+		return null;
+	}
+}
+
+function wrapUserData(data) {
+	var userData = {
+		'subscription': JSON.parse(data),
+		'ua': deviceDetection
+	};
+
+	return userData;
+}
 
 function urlB64ToUint8Array(base64String) {
 	const padding = '='.repeat((4 - base64String.length % 4) % 4);
@@ -19,7 +96,6 @@ function urlB64ToUint8Array(base64String) {
 	}
 	return outputArray;
 }
-
 
 function getUserPermission() {
 	return new Promise(function (resolve, reject) {
@@ -40,21 +116,6 @@ function getUserPermission() {
 		})
 }
 
-/* function subscribeUserToPush() {
-	return navigator.serviceWorker.register('http://localhost/push/service-worker.js')
-		.then(function (registration) {
-			const subscribeOptions = {
-				userVisibleOnly: true,
-				applicationServerKey: urlB64ToUint8Array(applicationServerPublicKey)
-			};
-			return registration.pushManager.subscribe(subscribeOptions);
-		})
-		.then(function (pushSubscription) {
-			console.log('Received PushSubscription: ', JSON.stringify(pushSubscription));
-			return pushSubscription;
-		})
-} */
-
 function subscribeUser() {
 	
 	swRegistration.pushManager.subscribe({
@@ -62,7 +123,8 @@ function subscribeUser() {
 		applicationServerKey: urlB64ToUint8Array(applicationServerPublicKey)
 	})
 	.then(function(subscription) {
-		document.querySelector('#subscription').innerHTML = JSON.stringify(subscription);
+		document.querySelector('#subscription').innerHTML = JSON.stringify(subscription);		
+		postData(JSON.stringify(wrapUserData(JSON.stringify(subscription))));
 	})
 	.catch(function(err) {
 		console.log(err);
@@ -75,9 +137,8 @@ function initializeUI() {
 		.then(function(subscription) {
 			isSubscribed = !(subscription === null);
 			if (isSubscribed) {
-				console.log('User is subscribed');
+				//
 			} else {
-				console.log('User is not subscribed');
 				subscribeUser();
 			}
 		});
@@ -95,24 +156,6 @@ function updateSubscriptionOnServer(subscription) {
 		subscriptionDetails.classList.add('is-invisible');
 	}
 }
-
-function updateBtn() {
-
-	if (Notification.permission === 'denied') {
-		pushButton.textContent = 'Push Messaging Blocked';
-		pushButton.disabled = true;
-		updateSubscriptionOnServer(null);
-		return;
-	}
-
-	if (isSubscribed) {
-		//pushButton.textContent = 'Disable Push Messaging';
-	} else {
-		//pushButton.textContent = 'Enable Push Messaging';
-	}
-	//pushButton.disabled = false;
-}
-
 
 function unsubscribeUser() {
 	swRegistration.pushManager.getSubscription()
@@ -132,7 +175,6 @@ function unsubscribeUser() {
 		});
 }
 
-
 function clickToSubscribe() {
     initializeUI();
 }
@@ -141,6 +183,7 @@ function registerServiceWorker() {
 	if ('serviceWorker' in navigator && 'PushManager' in window) {		
 		navigator.serviceWorker.register('service-worker.js')
 			.then(function (registration) {
+				
 				console.log('ServiceWorker registration successful with scope: ', registration);
 				swRegistration = registration;
 				initializeUI();
@@ -152,3 +195,10 @@ function registerServiceWorker() {
 }
 
 getUserPermission();
+//alert(navigator.appVersion);
+/* console.log(navigator);
+console.log(isAndroid());
+console.log(isIos());
+alert(JSON.stringify({
+	ua: deviceDetection
+}));  */

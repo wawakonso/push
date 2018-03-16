@@ -47,7 +47,6 @@ function getUserPermission() {
 }
 
 function clickToSubscribe() {
-    debugger
     subscribeUser();
 }
 

@@ -1,0 +1,54 @@
+{
+  "user1": {
+    "subscription": {
+      "endpoint": "https://fcm.googleapis.com/fcm/send/eOygrSAgaRQ:APA91bHevVPYWfctB8Adkx7Ajg-U7NXYaY68PZt0tHpmlOnsaiolbNJzr3b4YVSllwia-3t-IEtN0HGME50eTvrH3rurCBUv1xI4hVTle0D2_Gm7okn4iAfTROSYertYxzHWW4VDub6X",
+      "expirationTime": null,
+      "keys": {
+        "p256dh": "BMv42rNaCmOHX__RcK5JhM5DPHUZ2qBR2pDBXXd7LPW4v1CjJxgSWEaTiwvujGLBcg_NcLhH5XFm0eJl2JBG7wg=",
+        "auth": "1PBC4a00X9aXEYeVhNaNXw=="
+      }
+    },
+    "ua": {
+      "isSmartphoneOrTablet": true,
+      "device": [
+        "iPhone"
+      ],
+      "osVersion": "9.1",
+      "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1",
+      "deviceType": "phone"
+    },
+    "country": ""
+  },
+  "user2": {
+    "subscription": {
+      "endpoint": "https://fcm.googleapis.com/fcm/send/ei9MwLORPSI:APA91bG6sX2PjN3S-Lm6TT7DRyIpPzz31uzC_Bv4ue13Yul6IIrJtBBZf2ViNTw3RQHtYK_QYzKhs_BNPVLm2Qc_A5Bc9C4yJ-5pE2JMsoSIjoi4F51Pj3xhHhSxQYa2RhwigZgXAsqi",
+      "expirationTime": null,
+      "keys": {
+        "p256dh": "BL_HlsVWgsEj4eQDn7rbyOSRlj6hKjCBu48mCCTOxbIQ4V-qITu-VSFHqj2IaDCcXsRGAQ-JfWwQMSCmKrwZawA=",
+        "auth": "SZU6AQtfuTMhYYek0eWQyw=="
+      }
+    },
+    "ua": {
+      "isSmartphoneOrTablet": false,
+      "device": null,
+      "userAgent": "Mozilla/5.0 (BB10; Touch) AppleWebKit/537.10+ (KHTML, like Gecko) Version/10.0.9.2372 Mobile Safari/537.10+"
+    },
+    "country": ""
+  },
+  "user3": {
+    "subscription": {
+      "endpoint": "https://fcm.googleapis.com/fcm/send/cxcF3XcaNls:APA91bFI9Us9epLs1o2w5UaqgYGdqBiTKhoJKM6qj1eEFPqGWRoD_1Mh7Q7_DY1s_XRv3Cs1UC1B5QetGa2CSNeheTe0WCGqUZv8Gpcr4f5J7gaWWXjlW8NxAIrjG_of7uenUGG51elB",
+      "expirationTime": null,
+      "keys": {
+        "p256dh": "BPq4v7-g3SHqWJOuiEK0DFk8iKShl9hhQR1GilAx4WpkjQrAy5f719BAEVU6fhbvGL34Rcf9Qm2btTisTcJm3ks=",
+        "auth": "5kwURYu8-Q_PFMRv_76c_A=="
+      }
+    },
+    "ua": {
+      "isSmartphoneOrTablet": false,
+      "device": null,
+      "userAgent": "Mozilla/5.0 (MeeGo; NokiaN9) AppleWebKit/534.13 (KHTML, like Gecko) NokiaBrowser/8.5.0 Mobile Safari/534.13"
+    },
+    "country": ""
+  }
+}
