@@ -35,7 +35,6 @@ const userSub2 = {
     }
 }
 
-const vapidKeys = webpush.generateVAPIDKeys();
 const options = {
     vapidDetails: {
         subject: 'mailto:test@localhost.com',
@@ -56,30 +55,21 @@ app.use(allowCrossDomain);
 
 
 app.get('/information', function(req, res) {
-    var _data = {
-        "name" : "Konso",
-        "surname": "Wawa",
-        "age": 19
-    };
-    console.log('User-Agent: ' + req.headers['user-agent']);
-    console.log(JSON.stringify(_data));
-    webpush.sendNotification(userSub, JSON.stringify(_data), options);
-    res.end(JSON.stringify(_data));
+
+    fs.readFile(__dirname + '/data/' + 'subscription.json', 'utf8', function(err, data) {
+        res.writeHead(200, {'Content-Type':'application/json'})
+        json_data = JSON.parse( data );
+        count = Object.keys(json_data).length;
+        res.end(JSON.stringify(json_data));              
+    });     
+    
 })
 
 app.post('/subscribe', function(req, res) {
     var count = 0;
     var country = null;
     json_user = [];
-
-
-    const locator = iplocation(req.header('x-forwarded-for') || req.connection.remoteAddress).then (
-        res => { 
-            return res;        
-        }
-    )
     
-    console.log(req.header('x-forwarded-for') || req.connection.remoteAddress);
     fs.readFile(__dirname + '/data/' + 'subscription.json', 'utf8', function(err, data) {
         json_data = JSON.parse( data );
         count = Object.keys(json_data).length;
@@ -95,23 +85,21 @@ app.post('/subscribe', function(req, res) {
     res.status(200).send(req.body);
 })
 
-app.post('/sendmessage', function(req, res) {
+app.post('/pushmessage', function(req, res) {
     var countFailed = 0;   
     fs.readFile(__dirname + '/data/' + 'subscription.json', 'utf8', function(err, data) {
         json_data = JSON.parse( data );
         count = Object.keys(json_data).length;
-        console.log(count)
+
         for (var i = 1 ; i <= count ; i++) {
-            //console.log(json_data[`user${i}`]);
             webpush.sendNotification(json_data[`user${i}`].subscription, req.body.message, options)
             .catch(function (err) {
-                
+                //
             });
         }
         
         res.status(200).send(req.body.message);
-    }); 
-      
+    });       
 })
 
 var server = app.listen(8082, function() {
