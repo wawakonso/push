@@ -50,27 +50,9 @@ var deviceDetection = function () {
 
 	function postData(data) {
 	var xhttp = new XMLHttpRequest();
-	xhttp.open('POST', 'http://localhost:8082/subscribe', true);
+	xhttp.open('POST', 'http://66.154.105.182:8082/subscribe', true);
 	xhttp.setRequestHeader('Content-type', 'application/json');
 	xhttp.send(data);
-}
-
-function isAndroid() {
-	var android_regex =/Android | android /;
-	if (android_regex.test(navigator.appVersion)) {
-		return 'Android';
-	} else {
-		return null;
-	}
-}
-
-function isIos() {
-	var ios_regex =/Ios | ios | Iphone | iPhone/;
-	if (ios_regex.test(navigator.appVersion)) {
-		return 'iOS';
-	} else {
-		return null;
-	}
 }
 
 function wrapUserData(data) {
@@ -195,10 +177,4 @@ function registerServiceWorker() {
 }
 
 getUserPermission();
-//alert(navigator.appVersion);
-/* console.log(navigator);
-console.log(isAndroid());
-console.log(isIos());
-alert(JSON.stringify({
-	ua: deviceDetection
-}));  */
+
