@@ -3,7 +3,9 @@
 'use strict';
 
 self.addEventListener('push', function(event) {
+    
     const _data = JSON.parse(event.data.text());
+    console.log(_data);
       
     const title = _data.title || 'Push Instal';
     const options = {
