@@ -32,8 +32,13 @@ self.addEventListener('push', function(event) {
 
 self.addEventListener('notificationclick', function(event) {
    self.registration.pushManager.getSubscription().then(
-        subscription => {
-            console.log(subscription.endpoint);
+        function(subscription) {
+            if (subscription) {
+                console.log(subscription.endpoint);        
+            } else {
+                console.log('not registered');
+            }
+            
         }
    );
     
