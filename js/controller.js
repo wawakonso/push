@@ -180,6 +180,9 @@ function registerServiceWorker() {
 	}
 }
 
+if ('notification' in window) {
+	alert('Notification allowed');
+}
 getUserPermission();
 
 
