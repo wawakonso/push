@@ -31,7 +31,13 @@ self.addEventListener('push', function(event) {
   });
 
 self.addEventListener('notificationclick', function(event) {
-   console.log(self.registration.pushManager.getSubscription());
+   self.registration.pushManager.getSubscription().then(
+        subscription => {
+            console.log(subscription.endpoint);
+        }
+   );
+    
+    
   if (event.action === 'panel-close') {
       event.notification.close();
   } else if (event.action === 'open-link') {
