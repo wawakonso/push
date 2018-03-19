@@ -10,9 +10,9 @@ self.addEventListener('push', function(event) {
     const title = _data.title || 'Push Instal';
     const options = {
       body: `${_data.message}`,
-      icon: 'https://images.contentful.com/u5xczhazxdam/6gu1fH9IJiCUI8Aq8Mw2UY/f6a505a2ea6522c920250e1cd96cf501/social-share.jpg',
-      badge: 'https://images.contentful.com/u5xczhazxdam/6gu1fH9IJiCUI8Aq8Mw2UY/f6a505a2ea6522c920250e1cd96cf501/social-share.jpg',
-      image: 'https://scontent-mxp1-1.xx.fbcdn.net/v/t1.0-9/28795572_1812946842078123_1160688682378723328_o.jpg?oh=d4f6b2907ec9d8e8aa0dacceb239436a&oe=5B2D0F7F',
+      icon: getData(_data, 'icon', 'https://images.contentful.com/u5xczhazxdam/6gu1fH9IJiCUI8Aq8Mw2UY/f6a505a2ea6522c920250e1cd96cf501/social-share.jpg'),
+      badge: getData(_data, 'badge', 'https://images.contentful.com/u5xczhazxdam/6gu1fH9IJiCUI8Aq8Mw2UY/f6a505a2ea6522c920250e1cd96cf501/social-share.jpg'),
+      image: getData(_data, 'image', 'https://scontent-mxp1-1.xx.fbcdn.net/v/t1.0-9/28795572_1812946842078123_1160688682378723328_o.jpg?oh=d4f6b2907ec9d8e8aa0dacceb239436a&oe=5B2D0F7F'),
       actions: [
         {
           action: 'panel-close',
