@@ -1,4 +1,5 @@
 //var keys = generateVAPIDKeys();
+var service_url = '/service-worker.js'
 
 function urlBase64ToUint8Array(base64String) {
     const padding = '='.repeat((4 - base64String.length % 4) % 4);
@@ -11,7 +12,7 @@ function urlBase64ToUint8Array(base64String) {
 }
 
 function subscribeUserToPush() {
-    return navigator.serviceWorker.register('http://localhost/push/service-worker.js')
+    return navigator.serviceWorker.register(service_url)
         .then(function(registration) {
             const subscribeOptions = {
                 userVisibleOnly: true,
@@ -53,7 +54,7 @@ function clickToSubscribe() {
 function registerServiceWorker() {
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
-          navigator.serviceWorker.register('http://localhost/push/service-worker.js').then(function(registration) {
+          navigator.serviceWorker.register(service_url).then(function(registration) {
             // Registration was successful
             console.log('ServiceWorker registration successful with scope: ', registration.scope);
           }, function(err) {
