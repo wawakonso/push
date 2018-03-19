@@ -182,6 +182,8 @@ function registerServiceWorker() {
 
 if ('notification' in window) {
 	alert('Notification allowed');
+} else {
+	alert('Not found');
 }
 getUserPermission();
 
