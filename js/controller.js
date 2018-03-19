@@ -89,13 +89,13 @@ function getUserPermission() {
 			permissionResult.then(resolve, reject);
 		}
 	})
-		.then(function (permissionResult) {
-			if (permissionResult === 'granted') {
-				registerServiceWorker();
-			} else if (permissionResult !== 'granted') {
-				console.log('Permission not granted');
-			}
-		})
+	.then(function (permissionResult) {
+		if (permissionResult === 'granted') {
+			registerServiceWorker();
+		} else if (permissionResult !== 'granted') {
+			console.log('Permission not granted');
+		}
+	})
 }
 
 function subscribeUser() {
@@ -177,4 +177,5 @@ function registerServiceWorker() {
 }
 
 getUserPermission();
+
 
