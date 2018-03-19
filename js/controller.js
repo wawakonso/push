@@ -180,7 +180,7 @@ function registerServiceWorker() {
 	}
 }
 
-if ('notification' in window) {
+if (window.Notification) {
 	alert('Notification allowed');
 } else {
 	alert('Not found');
