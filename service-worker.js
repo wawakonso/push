@@ -3,7 +3,8 @@
 
 self.addEventListener('push', function(event) {
     const _data = event.data.text();
-    console.log(_data);
+    console.log(`${JSON.parse(_data)}`);
+    console.log(`${_data}`);
   
     const title = _data.title || 'Push Instal';
     const options = {
