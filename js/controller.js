@@ -161,6 +161,10 @@ function clickToSubscribe() {
     initializeUI();
 }
 
+function requestPermission() {
+	getUserPermission();
+}
+
 function registerServiceWorker() {
 	if ('serviceWorker' in navigator && 'PushManager' in window) {		
 		navigator.serviceWorker.register('service-worker.js')
