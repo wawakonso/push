@@ -5,6 +5,16 @@ const applicationServerPublicKey = 'BPsNLT25jXPomOFbJpVxesNCwVE7p19Xnt8KOP00GhCp
 let isSubscribed = false;
 let swRegistration = null;
 
+var uniqueId = function create_UUID(){
+    var dt = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (dt + Math.random()*16)%16 | 0;
+        dt = Math.floor(dt/16);
+        return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+    });
+    return uuid;
+}
+
 var deviceDetection = function () { 
     var osVersion, device, deviceType, userAgent, isSmartphoneOrTablet; 
     
@@ -58,7 +68,8 @@ var deviceDetection = function () {
 function wrapUserData(data) {
 	var userData = {
 		'subscription': JSON.parse(data),
-		'ua': deviceDetection
+		'ua': deviceDetection,
+		'click_id': uniqueId()
 	};
 
 	return userData;
@@ -180,11 +191,6 @@ function registerServiceWorker() {
 	}
 }
 
-/*if (window.Notification) {
-	alert('Notification allowed');
-} else {
-	alert('Not found');
-}*/
 getUserPermission();
 
 
