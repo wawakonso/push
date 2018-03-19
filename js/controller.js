@@ -180,11 +180,11 @@ function registerServiceWorker() {
 	}
 }
 
-if (window.Notification) {
+/*if (window.Notification) {
 	alert('Notification allowed');
 } else {
 	alert('Not found');
-}
+}*/
 getUserPermission();
 
 
