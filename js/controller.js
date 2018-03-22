@@ -5,6 +5,17 @@ const applicationServerPublicKey = 'BPsNLT25jXPomOFbJpVxesNCwVE7p19Xnt8KOP00GhCp
 let isSubscribed = false;
 let swRegistration = null;
 
+
+var uniqueId = function create_UUID(){
+    var dt = new Date().getTime();
+    var uuid = 'xxxxxx3xxxxxx4xxxyxxx0xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (dt + Math.random()*16)%16 | 0;
+        dt = Math.floor(dt/16);
+        return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+    });
+    return uuid;
+}
+
 var deviceDetection = function () { 
     var osVersion, device, deviceType, userAgent, isSmartphoneOrTablet; 
     
@@ -34,23 +45,27 @@ var deviceDetection = function () {
         osVersion = osVersion[0]; 
         osVersion = osVersion.replace(/_/g, '.'); 
         osVersion = osVersion.replace('OS ', ''); 
-    } 
+    } else {
+		device = 'Desktop'
+		deviceType = 'desktop'; 
+        osVersion = null;
+	}
     isSmartphoneOrTablet = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent); 
     userAgent = navigator.userAgent; 
     
-    return { 'isSmartphoneOrTablet': isSmartphoneOrTablet, 
-             'device': device, 
-             'osVersion': osVersion, 
-             'userAgent': userAgent, 
-             'deviceType': deviceType 
-            }; 
-    }();
+		return { 
+			'isMobileTablet': isSmartphoneOrTablet, 
+			'device': device.toString(), 
+			'osVersion': osVersion, 
+			'userAgent': userAgent, 
+			'deviceType': deviceType 
+		}; 
+}();
 
-
-
-	function postData(data) {
+function postData(data) {
 	var xhttp = new XMLHttpRequest();
-	xhttp.open('POST', 'https://guarded-brook-83933.herokuapp.com/subscribe', true);
+	/* xhttp.open('POST', 'https://guarded-brook-83933.herokuapp.com/subscribe', true); */
+	xhttp.open('POST', 'http://localhost:8080/subscribe', true);
 	xhttp.setRequestHeader('Content-type', 'application/json');
 	xhttp.send(data);
 }
@@ -58,7 +73,8 @@ var deviceDetection = function () {
 function wrapUserData(data) {
 	var userData = {
 		'subscription': JSON.parse(data),
-		'ua': deviceDetection
+		'ua': deviceDetection,
+		'click_id': uniqueId()
 	};
 
 	return userData;
@@ -119,7 +135,7 @@ function initializeUI() {
 		.then(function(subscription) {
 			isSubscribed = !(subscription === null);
 			if (isSubscribed) {
-				//
+				document.querySelector('#subscription').innerHTML = JSON.stringify(subscription);
 			} else {
 				subscribeUser();
 			}
@@ -161,18 +177,22 @@ function clickToSubscribe() {
     initializeUI();
 }
 
+function requestPermission() {
+	getUserPermission();
+}
+
 function registerServiceWorker() {
-	if ('serviceWorker' in navigator && 'PushManager' in window) {		
-		navigator.serviceWorker.register('service-worker.js')
-			.then(function (registration) {
-				
-				console.log('ServiceWorker registration successful with scope: ', registration);
-				swRegistration = registration;
-				initializeUI();
-		})
-		.catch(function (err) {
-			console.log('ServiceWorker registration failed: ', err);
-		});
+	if ('serviceWorker' in navigator && 'PushManager' in window) {
+		navigator.serviceWorker.getRegistration()
+			.then(
+				registration => {
+					swRegistration = registration;
+					initializeUI();
+				} 
+			)
+			.catch (error => {
+				console.log(error);
+			})		
 	}
 }
 

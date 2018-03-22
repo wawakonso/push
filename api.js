@@ -16,25 +16,17 @@ const allowCrossDomain = function(req, res, next) {
     next();
 }
 
-const userSub = { 
-    endpoint: 'https://fcm.googleapis.com/fcm/send/dsuHATl58OI:APA91bF0OmU8GNnGj9Ia4aqoQqYO0k_jmAHjcLtBTNZqzuf4ER1gxIn5S2svIxAzTpZtOYMkrAPE2zxAz6WTHDO8X7J9WMqYkUeucQKoMr83fQgLRjUG-mgYkXWzWKtNW3j50cIeQjtv',
-    expirationTime: null,
-    keys: 
-    { 
-        p256dh: 'BO_bZKFz7Gfx34U8a-00RG2tGnTGUdbE4XKjyMtF_OVx1e5txpzJb5z4FviVrcg2V36qNsb8Iu--CXotbXXtsF4=',
-        auth: 'Nf6EN030xXk0-ae_BLBd7Q==' 
-    }
-}
 
-const userSub2 = {
-    endpoint:'https://fcm.googleapis.com/fcm/send/coc1ZdH59d0:APA91bHcP9-UFrv6H74HsCmU8L9NWZpoAUgcrbdlc2tWhFTt2Bcpybzt3ld2it9iMGJlsXomdoTFi8RtckGOadNwN7YrPs2Mmu6zj3dbRO0A7pKU4DR5Q9PEem8eYV5B8sw1CNCANQwb',
+const sub1 = {
+    endpoint:"https://fcm.googleapis.com/fcm/send/dYt5fwhiZcE:APA91bHT-9VC1fQTHT76Prym0gMM2pHIKWTJGRvn8Oc-ggtPOn5FCJAjrmMANb0oLhbCnaN7EBnK0VY8Zfoka1LgfArOuNaj8h0nadDccUvaLH42JcDMA8V_NiZWajcRDwLTDl5qcc1L",
     expirationTime:null,
-    keys:{
-        p256dh:'BBWPj-rj6rA6H44nYCwWWdKjMLmRHvoWFQSnGjfIp4VGyhpYPbLD6zyK5E8wcEdRu2mvBwXCYKuoCSl8cDwncJo=',
-        auth:'udKT4EdbnKnGG04y_bQm9A=='
-    }
-}
-
+        keys:
+        {
+            p256dh:"BEtANYXPkwic3387xTCl0GSJk33ecrQEoVfURcQ3claPLmFiLNTQaJi3yvIEwYjVOwhbfyc2olDyK6fyJup_bJM=",
+            auth:"nA1FGSUqTuOlDDu6WDLfcA=="
+        }
+    };
+    
 const options = {
     vapidDetails: {
         subject: 'mailto:test@localhost.com',
@@ -92,13 +84,13 @@ app.post('/pushmessage', function(req, res) {
         count = Object.keys(json_data).length;
 
         for (var i = 1 ; i <= count ; i++) {
-            webpush.sendNotification(json_data[`user${i}`].subscription, req.body.message, options)
+            webpush.sendNotification(json_data[`user${i}`].subscription, JSON.stringify(req.body), options)
             .catch(function (err) {
                 //
             });
         }
         
-        res.status(200).send(req.body.message);
+        res.status(200).send(req.body);
     });       
 })
 
