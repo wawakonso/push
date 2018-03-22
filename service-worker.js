@@ -1,4 +1,5 @@
 
+
 'use strict';
 
 self.addEventListener('push', function (event) {
@@ -42,3 +43,4 @@ function getData(json_object, key, _defaultValue) {
 		return _defaultValue;
 	}
 }
+

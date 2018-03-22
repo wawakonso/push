@@ -5,7 +5,6 @@ const applicationServerPublicKey = 'BPsNLT25jXPomOFbJpVxesNCwVE7p19Xnt8KOP00GhCp
 let isSubscribed = false;
 let swRegistration = null;
 
-
 var uniqueId = function create_UUID(){
     var dt = new Date().getTime();
     var uuid = 'xxxxxx3xxxxxx4xxxyxxx0xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
