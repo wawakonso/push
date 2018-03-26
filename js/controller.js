@@ -4,6 +4,7 @@ const applicationServerPublicKey = 'BPsNLT25jXPomOFbJpVxesNCwVE7p19Xnt8KOP00GhCp
 
 let isSubscribed = false;
 let swRegistration = null;
+let urlParams = new URLSearchParams(window.location.search);
 
 var uniqueId = function create_UUID(){
     var dt = new Date().getTime();
@@ -51,7 +52,8 @@ var deviceDetection = function () {
 	}
     isSmartphoneOrTablet = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent); 
     userAgent = navigator.userAgent; 
-    
+	
+	
 		return { 
 			'isMobileTablet': isSmartphoneOrTablet, 
 			'device': device.toString(), 
@@ -120,8 +122,10 @@ function subscribeUser() {
 		applicationServerKey: urlB64ToUint8Array(applicationServerPublicKey)
 	})
 	.then(function(subscription) {
-		document.querySelector('#subscription').innerHTML = JSON.stringify(subscription);		
-		postData(JSON.stringify(wrapUserData(JSON.stringify(subscription))));
+		
+		console.log(wrapUserData(JSON.stringify(subscription)));
+		//document.querySelector('#subscription').innerHTML = JSON.stringify(subscription);		
+		//postData(JSON.stringify(wrapUserData(JSON.stringify(subscription))));
 	})
 	.catch(function(err) {
 		console.log(err);
@@ -134,7 +138,8 @@ function initializeUI() {
 		.then(function(subscription) {
 			isSubscribed = !(subscription === null);
 			if (isSubscribed) {
-				document.querySelector('#subscription').innerHTML = JSON.stringify(subscription);
+				console.log(wrapUserData(JSON.stringify(subscription)));
+				//document.querySelector('#subscription').innerHTML = JSON.stringify(subscription);
 			} else {
 				subscribeUser();
 			}
@@ -182,7 +187,7 @@ function requestPermission() {
 
 function registerServiceWorker() {
 	if ('serviceWorker' in navigator && 'PushManager' in window) {
-		navigator.serviceWorker.getRegistration()
+		navigator.serviceWorker.register('http://localhost:8887/service-worker.js')
 			.then(
 				registration => {
 					swRegistration = registration;
@@ -195,6 +200,9 @@ function registerServiceWorker() {
 	}
 }
 
+
+
+console.log(urlParams.get('clickId', null));
 getUserPermission();
 
 

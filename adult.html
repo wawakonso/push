@@ -1,0 +1,24 @@
+<!DOCTYPE>
+<HTML>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" type="text/css" media="all">        
+        <link rel="stylesheet" href="css/adult.css" type="text/css" media="all">
+    </head>
+
+    <body>
+            <div id="top-notification"> </div>
+            <div id="indicator">
+                <img src="images/up-arrow.svg">
+            </div>
+            <script src="js/controller.js"></script>
+            <script>
+                var arrowIndicator = document.getElementById('indicator');
+                var deviceHeight = window.innerHeight;
+                var deviceHalfHeight = Math.floor(deviceHeight/2);
+
+                arrowIndicator.style.marginTop = `${deviceHalfHeight}px`;
+                //arrowIndicator.style.cssFloat = 'right';
+                
+            </script>
+    </body>
+</HTML>
