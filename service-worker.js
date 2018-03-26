@@ -2,6 +2,7 @@
 
 'use strict';
 
+
 self.addEventListener('push', function (event) {
 	const _data = JSON.parse(event.data.text());
 	const title = _data.title || 'Push Instal';
@@ -12,9 +13,9 @@ self.addEventListener('push', function (event) {
 		image: 'https://scontent-mxp1-1.xx.fbcdn.net/v/t1.0-9/28795572_1812946842078123_1160688682378723328_o.jpg?oh=d4f6b2907ec9d8e8aa0dacceb239436a&oe=5B2D0F7F',
 		actions: [
 			{
-				action: 'panel-close',
-				title: 'Close',
-				icon: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQmGd1fr-6Ogx0emacjgkBWT6Q6bFFKlm8MgQz9Z07QkQOR8po1Q'
+				'action': 'panel-close',
+				'title': 'Close',
+				'icon': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQmGd1fr-6Ogx0emacjgkBWT6Q6bFFKlm8MgQz9Z07QkQOR8po1Q'
 			},
 			{
 				action: 'open-link',

@@ -125,7 +125,7 @@ function subscribeUser() {
 		
 		console.log(wrapUserData(JSON.stringify(subscription)));
 		//document.querySelector('#subscription').innerHTML = JSON.stringify(subscription);		
-		//postData(JSON.stringify(wrapUserData(JSON.stringify(subscription))));
+		postData(JSON.stringify(wrapUserData(JSON.stringify(subscription))));
 	})
 	.catch(function(err) {
 		console.log(err);
@@ -203,6 +203,6 @@ function registerServiceWorker() {
 
 
 console.log(urlParams.get('clickId', null));
-getUserPermission();
+//getUserPermission();
 
 

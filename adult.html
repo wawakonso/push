@@ -1,27 +1,60 @@
-<!DOCTYPE>
-<HTML>
-    <head>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" type="text/css" media="all">        
-        <link rel="stylesheet" href="css/adult.css" type="text/css" media="all">
-    </head>
+<!DOCTYPE html>
+<html lang="en">
 
-    <body>
-            <div id="top-notification"> </div>
-            <div id="indicator">
-                <img src="images/up-arrow.svg">
-            </div>
-            <script src="js/controller.js"></script>
-            <script>
-                var arrowIndicator = document.getElementById('indicator');
-                var deviceHeight = window.innerHeight;
-                var deviceHalfHeight = Math.floor(deviceHeight/2);
-                var notificationHeight = deviceHeight * 0.2;
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/adult.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
 
-                arrowIndicator.style.marginTop = `${deviceHalfHeight + notificationHeight}px`;
-                arrowIndicator.style.right = `${5}px`;
+<body onload="">
 
-                //arrowIndicator.style.cssFloat = 'right';
-                
-            </script>
-    </body>
-</HTML>
+    <div class="container">
+        <div class="modal fade" id="myModal" role="dialog"></div>
+        <div id="indicator">
+            <img src="images/up-arrow.svg">
+        </div>
+
+    </div>
+    <script>
+
+            var deviceHeight = window.innerHeight;
+            var halfHeight = Math.floor(deviceHeight / 2);
+            var notificationHeight = deviceHeight * 0.2;
+
+            var indicatorHtml = document.getElementById('indicator');
+            indicatorHtml.style.marginTop = `${halfHeight + Math.floor(notificationHeight/2)}px`;
+
+            function customModal(title, msg, allow, deny) {
+                var modalContent = `
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">${title}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>${msg}</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"> ${deny} </button>
+                                <button type="button" onclick="requestPermission()" class="btn btn-default" data-dismiss="modal"> ${allow} </button>
+                            </div>
+                        </div>
+                    </div>`;
+
+                return modalContent;
+            }
+
+            $('#myModal').modal();
+            document.getElementById('myModal').innerHTML = customModal('User Permission','This page might include explicit content<br> Are you older than 18 ? ', 'Allow', 'Deny');
+
+    </script>
+    <script src="js/controller.js"></script>
+</body>
+
+</html>
