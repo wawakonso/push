@@ -7,10 +7,10 @@ body {
     height: 100%;
 }
 
-#indicator > img {
+#indicator {
     width: 20%;
-    float: right;
-    /*position: absolute;*/
+    right: 0;
+    position: absolute;
 }
 
 #permission {
