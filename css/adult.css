@@ -10,7 +10,11 @@ body {
 #indicator {
     width: 20%;
     right: 0;
+    top: 350px;
     position: absolute;
+    animation: topDown 1s ease-in-out infinite;
+    -moz-animation: topDown 1s ease-in-out infinite;
+    -webkit-animation: topDown 1s ease-in-out infinite;
 }
 
 #permission {
@@ -22,14 +26,10 @@ body {
 .right {
     float: right;
 }
-/* permission css
-    icon, title and actions 
-*/
 
-#permission_1 > img{
-    width: 25%;
-    height: 30%;
-    object-fit: contain;
+.modal-body > p {
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .dialog-ovelay {
@@ -123,4 +123,15 @@ body {
 
 #footer > h4 {
     text-align: center;
+}
+
+@keyframes topDown {
+    0%,
+    100% {
+      transform: translate(0, -10px);
+    }
+  
+    50% {
+      transform: translate(0, 10px);
+    }
 }
