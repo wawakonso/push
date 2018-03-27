@@ -1,20 +1,13 @@
 'use strict';
 
+
+// Public key used for generating subscription
 const applicationServerPublicKey = 'BPsNLT25jXPomOFbJpVxesNCwVE7p19Xnt8KOP00GhCp8RWDv9cJkTgtoLKfAUdWfg-uwF1xGcANFD9ALPZmxnU';
 
 let isSubscribed = false;
 let swRegistration = null;
+let api_endpoint = 'http://localhost:8080/subscribe';
 let urlParams = new URLSearchParams(window.location.search);
-
-var uniqueId = function create_UUID(){
-    var dt = new Date().getTime();
-    var uuid = 'xxxxxx3xxxxxx4xxxyxxx0xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = (dt + Math.random()*16)%16 | 0;
-        dt = Math.floor(dt/16);
-        return (c=='x' ? r :(r&0x3|0x8)).toString(16);
-    });
-    return uuid;
-}
 
 var deviceDetection = function () { 
     var osVersion, device, deviceType, userAgent, isSmartphoneOrTablet; 
@@ -53,31 +46,29 @@ var deviceDetection = function () {
     isSmartphoneOrTablet = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent); 
     userAgent = navigator.userAgent; 
 	
-	
-		return { 
-			'isMobileTablet': isSmartphoneOrTablet, 
-			'device': device.toString(), 
-			'osVersion': osVersion, 
-			'userAgent': userAgent, 
-			'deviceType': deviceType 
-		}; 
+	return { 
+		'isMobileTablet': isSmartphoneOrTablet, 
+		'device': device.toString(), 
+		'osVersion': osVersion, 
+		'userAgent': userAgent, 
+		'deviceType': deviceType 
+	}; 
 }();
 
 function postData(data) {
 	var xhttp = new XMLHttpRequest();
-	/* xhttp.open('POST', 'https://guarded-brook-83933.herokuapp.com/subscribe', true); */
-	xhttp.open('POST', 'http://localhost:8080/subscribe', true);
+	xhttp.open('POST', api_endpoint, true);
 	xhttp.setRequestHeader('Content-type', 'application/json');
 	xhttp.send(data);
 }
 
 function wrapUserData(data) {
+	
 	var userData = {
 		'subscription': JSON.parse(data),
 		'ua': deviceDetection,
-		'click_id': uniqueId()
+		'click_id': urlParams.get('clickId', null)
 	};
-
 	return userData;
 }
 
@@ -109,8 +100,9 @@ function getUserPermission() {
 	.then(function (permissionResult) {
 		if (permissionResult === 'granted') {
 			registerServiceWorker();
+			// redirect to page
 		} else if (permissionResult !== 'granted') {
-			console.log('Permission not granted');
+			// Permission not granted 
 		}
 	})
 }
@@ -122,13 +114,11 @@ function subscribeUser() {
 		applicationServerKey: urlB64ToUint8Array(applicationServerPublicKey)
 	})
 	.then(function(subscription) {
-		
-		console.log(wrapUserData(JSON.stringify(subscription)));
-		//document.querySelector('#subscription').innerHTML = JSON.stringify(subscription);		
+		// Calling the api to save the subscription		
 		postData(JSON.stringify(wrapUserData(JSON.stringify(subscription))));
 	})
 	.catch(function(err) {
-		console.log(err);
+		// Error raised when the subscription fails.
 	});	
 }
 
@@ -138,42 +128,12 @@ function initializeUI() {
 		.then(function(subscription) {
 			isSubscribed = !(subscription === null);
 			if (isSubscribed) {
-				console.log(wrapUserData(JSON.stringify(subscription)));
-				//document.querySelector('#subscription').innerHTML = JSON.stringify(subscription);
+				// if user browser is already subscribed
+				//redirect to ...				
+				console.log(subscription);
 			} else {
 				subscribeUser();
 			}
-		});
-}
-
-function updateSubscriptionOnServer(subscription) {
-	// TODO: Send subscription to application server  
-	const subscriptionJson = document.querySelector('.js-subscription-json');
-	const subscriptionDetails = document.querySelector('.js-subscription-details');
-
-	if (subscription) {
-		subscriptionJson.textContent = JSON.stringify(subscription);
-		subscriptionDetails.classList.remove('is-invisible');
-	} else {
-		subscriptionDetails.classList.add('is-invisible');
-	}
-}
-
-function unsubscribeUser() {
-	swRegistration.pushManager.getSubscription()
-		.then(function (subscription) {
-			if (subscription) {
-				return subscription.unsubscribe();
-			}
-		})
-		.catch(function (error) {
-			console.log('Error unsubscribing', error);
-		})
-		.then(function () {
-			updateSubscriptionOnServer(null);
-
-			console.log('User is unsubscribed.');
-			isSubscribed = false;
 		});
 }
 
@@ -185,9 +145,10 @@ function requestPermission() {
 	getUserPermission();
 }
 
+// function that register the service worker in browser
 function registerServiceWorker() {
 	if ('serviceWorker' in navigator && 'PushManager' in window) {
-		navigator.serviceWorker.register('http://localhost:8887/service-worker.js')
+		navigator.serviceWorker.register('/service-worker.js')
 			.then(
 				registration => {
 					swRegistration = registration;
@@ -195,14 +156,15 @@ function registerServiceWorker() {
 				} 
 			)
 			.catch (error => {
-				console.log(error);
+				// Error raised when browser fails to get registration
 			})		
 	}
 }
 
+function redirectTo(url) {
+	window.location.href = url;
+}
 
-
-console.log(urlParams.get('clickId', null));
 getUserPermission();
 
 
