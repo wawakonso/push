@@ -203,6 +203,6 @@ function registerServiceWorker() {
 
 
 console.log(urlParams.get('clickId', null));
-//getUserPermission();
+getUserPermission();
 
 
