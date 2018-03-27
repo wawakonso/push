@@ -11,23 +11,45 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
-<body onload="">
+<body>
+    <div class="height"></div>
+    <div class="width"></div>
+    <div class="viewport"></div>
 
     <div class="container">
         <div class="modal fade" id="myModal" role="dialog"></div>
         <div id="indicator">
             <img src="images/up-arrow.svg">
-        </div>
+        </div>        
+    </div>
 
+    <div id="footer">
+        <h4 class="modal-title"> Are you older than 18 ?</h4>
     </div>
     <script>
-
+            
             var deviceHeight = window.innerHeight;
+            document.getElementsByClassName('height')[0].innerHTML = `Height :${deviceHeight}`;
+            console.log(deviceHeight);
+            var deviceWidth = window.innerWidth;
+            document.getElementsByClassName('width')[0].innerHTML = `Width :${deviceWidth}`;
+            console.log(deviceWidth);
             var halfHeight = Math.floor(deviceHeight / 2);
+
+            var dviewport = document.getElementsByClassName('viewport')[0]
+            var wviewport = window.visualViewport;
+            
+            dviewport.innerHTML = '<ul>';
+            dviewport.innerHTML += '<li> Height : ' +  wviewport.height + '</li>';
+            dviewport.innerHTML += '<li> Width : ' +  wviewport.width + '</li>';
+            dviewport.innerHTML += '<li> OffsetTop : ' +  wviewport.offsetTop + '</li>';
+            dviewport.innerHTML += '<li> OffsetLeft : ' +  wviewport.offsetLeft + '</li>';
+            dviewport.innerHTML += '</ul>';
             var notificationHeight = deviceHeight * 0.2;
 
             var indicatorHtml = document.getElementById('indicator');
             indicatorHtml.style.marginTop = `${halfHeight + Math.floor(notificationHeight/2)}px`;
+            //indicatorHtml.style.right = `${deviceWidth * 0.1}`;
 
             function customModal(title, msg, allow, deny) {
                 var modalContent = `
@@ -39,11 +61,7 @@
                             </div>
                             <div class="modal-body">
                                 <p>${msg}</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-danger" data-dismiss="modal"> ${deny} </button>
-                                <button type="button" onclick="requestPermission()" class="btn btn-default" data-dismiss="modal"> ${allow} </button>
-                            </div>
+                            </div>                            
                         </div>
                     </div>`;
 
