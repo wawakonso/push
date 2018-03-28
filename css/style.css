@@ -1,7 +1,7 @@
 body {
     position: absolute;
     width: 100%;
-    background: #03011f !important;
+    background: #fff !important;
     font-weight: 400;
     font-size: 2rem;
     height: 100%;
@@ -18,13 +18,7 @@ body {
 }
 
 #indicator > svg > path {
-    fill:rgb(255, 255, 255);
-}
-
-#permission {
-    width: 90%;
-    background-color: #fff;
-    margin: 0 auto;
+    fill:rgb(112, 108, 108);
 }
 
 .right {
@@ -36,6 +30,14 @@ body {
     font-weight: bold;
 }
 
+#consent {
+    width: 98%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 2px;
+}
+
+/*
 .dialog-ovelay {
     position: absolute;
     top: 0;
@@ -127,7 +129,7 @@ body {
 
 #footer > h4 {
     text-align: center;
-}
+}*/
 
 @keyframes topDown {
     0%,

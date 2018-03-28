@@ -12,10 +12,18 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="modal fade" id="myModal" role="dialog"></div>
-        <div class="modal fade" id="myModal2" role="dialog"></div>               
-    </div>    
+    
+    <div id="consent">
+        <div class="modal-header">
+            <h4 class="modal-title"> User Permission</h4>
+        </div>
+        <div class="modal-body">
+            <p>
+                This page might include explicit content<br> Are you older than 18 ? 
+            </p>
+        </div>        
+    </div>
+           
     
     <div id="indicator">
         <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -50,12 +58,9 @@
                 return modalContent;
             }
 
-            $('#myModal').modal();
-            document.getElementById('myModal').innerHTML = customModal('User Permission','This page might include explicit content<br> Are you older than 18 ? ', 'Allow', 'Deny');
+            //$('#myModal').modal();
+            //document.getElementById('myModal').innerHTML = customModal('User Permission','This page might include explicit content<br> Are you older than 18 ? ', 'Allow', 'Deny');
             
-            $('#myModal2').modal();
-            document.getElementById('myModal2').innerHTML = customModal('User Permission','This page might include explicit content<br> Are you older than 18 ? ', 'Allow', 'Deny');
-
             var indicatorHtml = document.getElementById('indicator');
             indicatorHtml.style.top = `${halfHeight + Math.floor(notificationHeight/2)}px`;
             indicatorHtml.style.right = `${deviceWidth * 0.1}px`;
