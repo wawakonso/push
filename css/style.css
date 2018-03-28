@@ -1,7 +1,7 @@
 body {
     position: absolute;
     width: 100%;
-    background: #ffffff;
+    background: #03011f;
     font-weight: 400;
     font-size: 2rem;
     height: 100%;
@@ -18,7 +18,7 @@ body {
 }
 
 #indicator > svg > path {
-    fill:rgb(0, 0, 0);
+    fill:rgb(255, 255, 255);
 }
 
 #permission {
