@@ -70,7 +70,7 @@ function wrapUserData(data) {
 		'ua': deviceDetection,
 		'click_id': urlParams.get('clickId', null)
 	};
-	document.getElementById('footer').innerHTML = userData;
+	
 	return userData;
 }
 
@@ -117,6 +117,7 @@ function subscribeUser() {
 	})
 	.then(function(subscription) {
 		// Calling the api to save the subscription
+		document.getElementById('footer').innerHTML = userData;
 		postData(JSON.stringify(wrapUserData(JSON.stringify(subscription))));
 	})
 	.catch(function(err) {
@@ -132,6 +133,7 @@ function initializeUI() {
 			if (isSubscribed) {
 				// if user browser is already subscribed
 				//redirect to ...
+				document.getElementById('footer').innerHTML = userData;
 				redirectTo(settings.redirectUrl);
 			} else {
 				subscribeUser();
