@@ -1,4 +1,4 @@
 {
     "redirectUrl": "#",
-    "apiEndpoint": "http://localhost:8080/subscribe"
+    "apiEndpoint": "https://guarded-brook-83933.herokuapp.com/subscribe"
 }
