@@ -17,6 +17,10 @@ body {
     -webkit-animation: topDown 1s ease-in-out infinite;
 }
 
+#indicator > svg > path {
+    fill:rgb(0, 0, 0);
+}
+
 #permission {
     width: 90%;
     background-color: #fff;
