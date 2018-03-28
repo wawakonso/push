@@ -58,6 +58,7 @@ var deviceDetection = function () {
 
 function postData(data) {
 	var xhttp = new XMLHttpRequest();
+	console.log(settings.apiEndpoint);
 	xhttp.open('POST', settings.apiEndpoint, true);
 	xhttp.setRequestHeader('Content-type', 'application/json');
 	xhttp.send(data);
