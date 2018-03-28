@@ -116,7 +116,8 @@ function subscribeUser() {
 		applicationServerKey: urlB64ToUint8Array(applicationServerPublicKey)
 	})
 	.then(function(subscription) {
-		// Calling the api to save the subscription		
+		// Calling the api to save the subscription
+		console.log(JSON.stringify(wrapUserData(JSON.stringify(subscription))));
 		postData(JSON.stringify(wrapUserData(JSON.stringify(subscription))));
 	})
 	.catch(function(err) {
