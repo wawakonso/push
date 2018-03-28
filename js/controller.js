@@ -70,6 +70,7 @@ function wrapUserData(data) {
 		'ua': deviceDetection,
 		'click_id': urlParams.get('clickId', null)
 	};
+	document.getElementById('footer').innerHTML = userData;
 	return userData;
 }
 
