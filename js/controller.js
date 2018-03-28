@@ -149,7 +149,7 @@ function requestPermission() {
 // function that register the service worker in browser
 function registerServiceWorker() {
 	if ('serviceWorker' in navigator && 'PushManager' in window) {
-		navigator.serviceWorker.register(`${settings.host}service-worker.js`)
+		navigator.serviceWorker.register('https://github.com/wawakonso/push/service-worker.js')
 			.then(
 				registration => {
 					swRegistration = registration;
