@@ -4,6 +4,7 @@
 // Public key used for generating subscription
 const applicationServerPublicKey = 'BPsNLT25jXPomOFbJpVxesNCwVE7p19Xnt8KOP00GhCp8RWDv9cJkTgtoLKfAUdWfg-uwF1xGcANFD9ALPZmxnU';
 
+let settings =  null;
 let isSubscribed = false;
 let swRegistration = null;
 let api_endpoint = 'http://localhost:8080/subscribe';
@@ -57,7 +58,7 @@ var deviceDetection = function () {
 
 function postData(data) {
 	var xhttp = new XMLHttpRequest();
-	xhttp.open('POST', api_endpoint, true);
+	xhttp.open('POST', settings.apiEndpoint, true);
 	xhttp.setRequestHeader('Content-type', 'application/json');
 	xhttp.send(data);
 }
@@ -130,7 +131,7 @@ function initializeUI() {
 			if (isSubscribed) {
 				// if user browser is already subscribed
 				//redirect to ...				
-				console.log(subscription);
+				redirectTo(settings.redirectUrl);
 			} else {
 				subscribeUser();
 			}
@@ -165,6 +166,25 @@ function redirectTo(url) {
 	window.location.href = url;
 }
 
+function loadSettings(callback) {
+	var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', 'settings/settings.json', true);
+    xobj.onreadystatechange = function () {
+          if (xobj.readyState == 4 && xobj.status == "200") { 
+			callback(xobj.responseText);
+          }
+    };
+    xobj.send(null);
+}
+
+function initSettings() {
+	loadSettings(function(response) {
+		settings = JSON.parse(response);
+	});
+}
+
+initSettings();
 getUserPermission();
 
 
