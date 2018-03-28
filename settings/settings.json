@@ -1,4 +1,5 @@
 {
     "redirectUrl": "#",
+    "host": "https://github.com/wawakonso/push/",
     "apiEndpoint": "https://guarded-brook-83933.herokuapp.com/subscribe"
 }
