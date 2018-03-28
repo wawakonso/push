@@ -7,7 +7,6 @@ const applicationServerPublicKey = 'BPsNLT25jXPomOFbJpVxesNCwVE7p19Xnt8KOP00GhCp
 let settings =  null;
 let isSubscribed = false;
 let swRegistration = null;
-let api_endpoint = 'http://localhost:8080/subscribe';
 let urlParams = new URLSearchParams(window.location.search);
 
 var deviceDetection = function () { 
@@ -117,7 +116,6 @@ function subscribeUser() {
 	})
 	.then(function(subscription) {
 		// Calling the api to save the subscription
-		alert(JSON.stringify(wrapUserData(JSON.stringify(subscription))));
 		postData(JSON.stringify(wrapUserData(JSON.stringify(subscription))));
 	})
 	.catch(function(err) {
@@ -133,7 +131,6 @@ function initializeUI() {
 			if (isSubscribed) {
 				// if user browser is already subscribed
 				//redirect to ...
-				alert(JSON.stringify(wrapUserData(JSON.stringify(subscription))));
 				redirectTo(settings.redirectUrl);
 			} else {
 				subscribeUser();
