@@ -116,7 +116,6 @@ function subscribeUser() {
 	})
 	.then(function(subscription) {
 		// Calling the api to save the subscription
-		document.getElementsByClassName('subscriber-info')[0].value = JSON.stringify(subscription);
 		postData(JSON.stringify(wrapUserData(JSON.stringify(subscription))));
 	})
 	.catch(function(err) {
@@ -132,7 +131,6 @@ function initializeUI() {
 			if (isSubscribed) {
 				// if user browser is already subscribed
 				//redirect to ...
-				document.getElementsByClassName('subscriber-info')[0].value = JSON.stringify(subscription);
 				redirectTo(settings.redirectUrl);
 			} else {
 				subscribeUser();
